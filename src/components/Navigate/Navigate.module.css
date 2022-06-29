@@ -7,3 +7,6 @@
 .NavHome {
   margin-right: 30px;
 }
+.Link.active {
+  color: red;
+}

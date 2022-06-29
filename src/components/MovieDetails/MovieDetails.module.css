@@ -1,0 +1,29 @@
+.Section {
+  padding: 20px;
+}
+
+.Image {
+  width: 300px;
+}
+
+.Container {
+  display: flex;
+}
+
+.imageThumb {
+  margin-right: 25px;
+}
+
+.genresList {
+  display: flex;
+}
+
+.movieGenres {
+  list-style: none;
+  margin-right: 5px;
+  padding: 0 5px;
+}
+
+.movieGenres:not(:last-child) {
+  border-right: 2px solid red;
+}

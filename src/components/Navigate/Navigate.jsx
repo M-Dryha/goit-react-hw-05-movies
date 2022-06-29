@@ -1,8 +1,15 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 
 // import Home from '../Home';
 // import Movies from '../Movies';
 import s from './Navigate.module.css';
+
+const Link = styled(NavLink)`
+  &.active {
+    color: red;
+  }
+`;
 
 const Navigate = () => {
   return (
@@ -11,10 +18,10 @@ const Navigate = () => {
         {/* <Home to="/" />
         <Movies to="/movies" /> */}
 
-        <NavLink to="/" className={s.NavHome}>
+        <Link to="/" className={s.NavHome}>
           Home
-        </NavLink>
-        <NavLink to="/movies">Movies</NavLink>
+        </Link>
+        <Link to="/movies">Movies</Link>
       </nav>
       <Outlet />
     </>

@@ -1,36 +1,38 @@
 import s from './Pages.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ThreeCircles } from 'react-loader-spinner';
 import { GetFilms } from 'API';
 
 export const Home = () => {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    GetFilms()
-      .then(data => {
-        setData(data);
-      })
-
-      .catch(error => console.error(error));
+    async function fetchFilms() {
+      setLoading(true);
+      try {
+        const response = await GetFilms();
+        setData(response);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchFilms();
   }, []);
-
-  // useEffect(() => {
-  //   async function fetchFilms() {
-  //     try {
-  //       const response = GetFilms();
-  //       setData(response);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchFilms();
-  // }, []);
-
-  // console.log(data.data.results);
 
   return (
     <ul>
+      {loading && (
+        <ThreeCircles
+          color="red"
+          outerCircleColor="blue"
+          middleCircleColor="red"
+          innerCircleColor="grey"
+        />
+      )}
       {data &&
         data.results.map(({ original_title, name, id }) => (
           <li key={id} className={s.ListItem}>
