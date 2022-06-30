@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getMovieById } from 'API';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Outlet } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
 import placeHolder from '../../data/no-image.jpg';
 import s from './MovieDetails.module.css';
+// import Reviews from '../Reviews';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -26,7 +27,7 @@ const MovieDetails = () => {
   }, [movieId]);
 
   return (
-    <section className={s.Section}>
+    <main className={s.cardContainer}>
       {loading && (
         <ThreeCircles
           color="red"
@@ -36,7 +37,6 @@ const MovieDetails = () => {
         />
       )}
       <Link to="/"> Go back </Link>
-
       {film && (
         <div className={s.Container}>
           <div className={s.imageThumb}>
@@ -52,6 +52,7 @@ const MovieDetails = () => {
           </div>
           <div>
             <h2> {film.original_title}</h2>
+            <p> User Score: {film.vote_average * 10}%</p>
             {film && (
               <div>
                 <h3>Genres</h3>
@@ -71,7 +72,16 @@ const MovieDetails = () => {
           </div>
         </div>
       )}
-    </section>
+      <section className={s.section}>
+        <Link to={`cast`} movieId={movieId}>
+          Cast
+        </Link>
+        <Link to={`reviews`} movieId={movieId}>
+          Reviews
+        </Link>
+      </section>
+      <Outlet />
+    </main>
   );
 };
 export default MovieDetails;
