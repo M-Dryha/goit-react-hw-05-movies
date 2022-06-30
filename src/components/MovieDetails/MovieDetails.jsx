@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getMovieById } from 'API';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
 import placeHolder from '../../data/no-image.jpg';
 import s from './MovieDetails.module.css';
@@ -35,6 +35,8 @@ const MovieDetails = () => {
           innerCircleColor="grey"
         />
       )}
+      <Link to="/"> Go back </Link>
+
       {film && (
         <div className={s.Container}>
           <div className={s.imageThumb}>
@@ -55,7 +57,9 @@ const MovieDetails = () => {
                 <h3>Genres</h3>
                 <ul className={s.genresList}>
                   {film.genres.map(genre => (
-                    <li className={s.movieGenres}>{genre.name}</li>
+                    <li key={genre.name} className={s.movieGenres}>
+                      {genre.name}
+                    </li>
                   ))}
                 </ul>
               </div>

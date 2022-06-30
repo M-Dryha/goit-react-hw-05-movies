@@ -32,13 +32,18 @@ const GetFilms = async () => {
 };
 
 const getMovieById = async id => {
-  //   GetGenres();
-
   const response = await axios.get(
     `3/movie/${id}?api_key=${KEY}&language=en-US`
   );
-
   return response.data;
 };
 
-export { GetFilms, getMovieById };
+function getMoviesByQuery(query) {
+  return axios
+    .get(
+      `/3/search/movie?api_key=${KEY}&language=en-US&include_adult=false&query=${query}`
+    )
+    .then(response => response.data);
+}
+
+export { GetFilms, getMovieById, getMoviesByQuery };
