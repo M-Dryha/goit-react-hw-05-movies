@@ -45,12 +45,22 @@ const getMovieReviews = async id => {
   return response.data;
 };
 
-function getMoviesByQuery(query) {
-  return axios
-    .get(
-      `/3/search/movie?api_key=${KEY}&language=en-US&include_adult=false&query=${query}`
-    )
-    .then(response => response.data);
-}
+const getMoviesByQuery = async query => {
+  const response = await axios.get(
+    `/3/search/movie?api_key=${KEY}&language=en-US&include_adult=false&query=${query}`
+  );
+  return response.data;
+};
 
-export { GetFilms, getMovieById, getMoviesByQuery, getMovieReviews };
+const getMoviesCast = async id => {
+  const response = await axios.get(`/3/movie/${id}/credits?api_key=${KEY}`);
+  return response.data;
+};
+
+export {
+  GetFilms,
+  getMovieById,
+  getMoviesByQuery,
+  getMovieReviews,
+  getMoviesCast,
+};

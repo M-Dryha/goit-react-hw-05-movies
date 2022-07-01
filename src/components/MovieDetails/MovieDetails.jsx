@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getMovieById } from 'API';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
 import placeHolder from '../../data/no-image.jpg';
 import s from './MovieDetails.module.css';
@@ -10,6 +10,8 @@ const MovieDetails = () => {
   const { movieId } = useParams();
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+  const backLink = location?.state?.from ?? '/';
 
   useEffect(() => {
     async function fetchFilm() {
@@ -36,9 +38,9 @@ const MovieDetails = () => {
           innerCircleColor="grey"
         />
       )}
-      <Link to="/"> Go back </Link>
+      <Link to={backLink}> Go back </Link>
       {film && (
-        <div className={s.Container}>
+        <section className={s.Container}>
           <div className={s.imageThumb}>
             <img
               className={s.Image}
@@ -70,15 +72,19 @@ const MovieDetails = () => {
               <p> {film.overview}</p>
             </div>
           </div>
-        </div>
+        </section>
       )}
       <section className={s.section}>
-        <Link to={`cast`} movieId={movieId}>
-          Cast
-        </Link>
-        <Link to={`reviews`} movieId={movieId}>
-          Reviews
-        </Link>
+        <div className={s.information}>
+          <h3>Additional information</h3>
+
+          <Link to={`cast`} movieId={movieId}>
+            Cast
+          </Link>
+          <Link to={`reviews`} movieId={movieId}>
+            Reviews
+          </Link>
+        </div>
       </section>
       <Outlet />
     </main>

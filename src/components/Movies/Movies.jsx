@@ -6,33 +6,11 @@ import { getMoviesByQuery } from 'API';
 import s from './Movies.module.css';
 
 const Movies = () => {
-  // const [inputData, setInputData] = useState('');
-  // const [query, setQuery] = useState('');
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
-
-  // useEffect(() => {}, [third]);
-
-  // const handleQuery = e => {
-  //   const { value } = e.target;
-  //   setInputData(value);
-  // };
-
-  // async function handleSubmit() {
-  //   console.log(query);
-  //   setLoading(true);
-  //   try {
-  //     const response = await getMoviesByQuery(query);
-  //     setData(response);
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
 
   useEffect(() => {
     if (!query) {
@@ -55,23 +33,13 @@ const Movies = () => {
   }, [query, setSearchParams]);
 
   const handleSubmit = e => {
-    // e.preventDefault();
-    // setQuery(inputData);
-
     setSearchParams({ query: e.currentTarget.elements.query.value });
   };
 
   return (
     <section>
       <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          autoComplete="off"
-          autoFocus
-          name="query"
-          // value={inputData}
-          // onChange={handleQuery}
-        />
+        <input type="text" autoComplete="off" autoFocus name="query" />
         <button type="submit">Search</button>
       </form>
 

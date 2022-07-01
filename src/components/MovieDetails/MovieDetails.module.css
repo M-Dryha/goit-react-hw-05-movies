@@ -3,15 +3,17 @@
 }
 
 .Image {
-  width: 300px;
+  width: 220px;
 }
 
 .Container {
   display: flex;
+  padding-bottom: 10px;
 }
 
 .imageThumb {
   margin-right: 25px;
+  margin-top: 10px;
 }
 
 .genresList {
@@ -27,7 +29,13 @@
 .movieGenres:not(:last-child) {
   border-right: 2px solid red;
 }
-.section {
+/* .section {
+  padding: 20px;
+} */
+.information {
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  border-bottom: 2px solid gray;
+  border-top: 2px solid gray;
 }
