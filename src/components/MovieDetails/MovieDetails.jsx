@@ -93,4 +93,5 @@ const MovieDetails = () => {
     </main>
   );
 };
+
 export default MovieDetails;
