@@ -1,14 +1,13 @@
-// import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
 import { getMoviesByQuery } from 'API';
 import s from './Movies.module.css';
 
 const Movies = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
 
@@ -21,8 +20,8 @@ const Movies = () => {
       setLoading(true);
       try {
         const response = await getMoviesByQuery(query);
-        setData(response);
-        setSearchParams({ query: query });
+        setData(response.results);
+        setSearchParams({ query: query.toLowerCase().trim() });
       } catch (err) {
         console.log(err);
       } finally {
@@ -52,10 +51,12 @@ const Movies = () => {
             innerCircleColor="grey"
           />
         )}
-        {data &&
-          data.results.map(({ original_title, name, id }) => (
+        {data.length > 0 &&
+          data.map(({ original_title, name, id }) => (
             <li key={id} className={s.ListItem}>
-              <Link to={`./${id}`}>{original_title ?? name}</Link>
+              <Link to={`./${id}`} state={{ from: location }}>
+                {original_title ?? name}
+              </Link>
             </li>
           ))}
       </ul>

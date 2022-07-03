@@ -5,7 +5,7 @@ import { getMovieReviews } from 'API';
 
 const Reviews = () => {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const Reviews = () => {
       setLoading(true);
       try {
         const getFilmReviews = await getMovieReviews(movieId);
-        setReviews(getFilmReviews);
+        setReviews(getFilmReviews.results);
       } catch (error) {
         console.log(error);
       } finally {
@@ -22,8 +22,6 @@ const Reviews = () => {
     }
     fetchFilm();
   }, [movieId]);
-
-  console.log(reviews);
 
   return (
     <div>
@@ -36,13 +34,16 @@ const Reviews = () => {
         />
       )}
       {/* {reviews.results.length === 0 && <p> No Reviews found =(</p>} */}
-      {reviews &&
-        reviews.results.map(({ author, content }) => (
+      {reviews.length > 0 ? (
+        reviews.map(({ author, content }) => (
           <div key={author}>
             <h4>Author: {author}</h4>
             <p>{content}</p>
           </div>
-        ))}
+        ))
+      ) : (
+        <p> No Reviews found =(</p>
+      )}
     </div>
   );
 };

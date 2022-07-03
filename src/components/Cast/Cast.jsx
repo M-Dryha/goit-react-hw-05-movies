@@ -7,7 +7,7 @@ import s from './Cast.module.css';
 
 const Cast = () => {
   const { movieId } = useParams();
-  const [cast, setCast] = useState(null);
+  const [cast, setCast] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Cast = () => {
       setLoading(true);
       try {
         const getFilmReviews = await getMoviesCast(movieId);
-        setCast(getFilmReviews);
+        setCast(getFilmReviews.cast);
       } catch (error) {
         console.log(error);
       } finally {
@@ -24,8 +24,6 @@ const Cast = () => {
     }
     fetchFilm();
   }, [movieId]);
-
-  console.log(cast);
 
   return (
     <ul className={s.castList}>
@@ -37,8 +35,8 @@ const Cast = () => {
           innerCircleColor="grey"
         />
       )}
-      {cast &&
-        cast.cast.map(({ original_name, character, profile_path, id }) => {
+      {cast.length > 0 ? (
+        cast.map(({ original_name, character, profile_path, id }) => {
           return (
             <li key={id} className={s.castItem}>
               <img
@@ -54,7 +52,10 @@ const Cast = () => {
               <p>Character: {character}</p>
             </li>
           );
-        })}
+        })
+      ) : (
+        <p> Cast not found =(</p>
+      )}
     </ul>
   );
 };

@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { getMovieById } from 'API';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
+// import { nanoid } from 'nanoid';
 import placeHolder from '../../data/no-image.jpg';
 import s from './MovieDetails.module.css';
-// import Reviews from '../Reviews';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const [film, setFilm] = useState(null);
+  const [film, setFilm] = useState({});
+  const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const backLink = location?.state?.from ?? '/';
@@ -19,6 +20,7 @@ const MovieDetails = () => {
       try {
         const getFilmDetails = await getMovieById(movieId);
         setFilm(getFilmDetails);
+        setGenres(getFilmDetails.genres);
       } catch (error) {
         console.log(error);
       } finally {
@@ -28,6 +30,7 @@ const MovieDetails = () => {
     fetchFilm();
   }, [movieId]);
 
+  const { original_title, vote_average, overview, poster_path } = film;
   return (
     <main className={s.cardContainer}>
       {loading && (
@@ -45,22 +48,22 @@ const MovieDetails = () => {
             <img
               className={s.Image}
               src={
-                film.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
+                poster_path
+                  ? `https://image.tmdb.org/t/p/w500${poster_path}`
                   : placeHolder
               }
-              alt={film.original_title}
+              alt={original_title}
             />
           </div>
           <div>
-            <h2> {film.original_title}</h2>
-            <p> User Score: {film.vote_average * 10}%</p>
+            <h2> {original_title}</h2>
+            <p> User Score: {vote_average * 10}%</p>
             {film && (
               <div>
                 <h3>Genres</h3>
                 <ul className={s.genresList}>
-                  {film.genres.map(genre => (
-                    <li key={genre.name} className={s.movieGenres}>
+                  {genres.map(genre => (
+                    <li key={genre.id} className={s.movieGenres}>
                       {genre.name}
                     </li>
                   ))}
@@ -69,7 +72,7 @@ const MovieDetails = () => {
             )}
             <div>
               <h3>Overview</h3>
-              <p> {film.overview}</p>
+              <p> {overview}</p>
             </div>
           </div>
         </section>
@@ -78,10 +81,10 @@ const MovieDetails = () => {
         <div className={s.information}>
           <h3>Additional information</h3>
 
-          <Link to={`cast`} movieId={movieId}>
+          <Link to={`cast`} movieId={movieId} state={{ from: backLink }}>
             Cast
           </Link>
-          <Link to={`reviews`} movieId={movieId}>
+          <Link to={`reviews`} movieId={movieId} state={{ from: backLink }}>
             Reviews
           </Link>
         </div>
