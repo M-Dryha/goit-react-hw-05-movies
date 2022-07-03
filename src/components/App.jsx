@@ -5,7 +5,7 @@ import { Suspense, lazy } from 'react';
 // import MovieDetails from './MovieDetails';
 // import Reviews from './Reviews';
 // import Cast from './Cast';
-// import Navigate from './Navigate';
+import Navigate from './Navigate';
 // import NotFoundPage from './NotFound';
 
 const Home = lazy(() =>
@@ -16,7 +16,7 @@ const Movies = lazy(() => import('./Movies/Movies'));
 const Reviews = lazy(() => import('./Reviews/Reviews'));
 const MovieDetails = lazy(() => import('../components/MovieDetails'));
 const Cast = lazy(() => import('../components/Cast'));
-const Navigate = lazy(() => import('./Navigate/Navigate'));
+// const Navigate = lazy(() => import('./Navigate/Navigate'));
 const NotFoundPage = lazy(() => import('./NotFound/NotFound'));
 
 export const App = () => {
