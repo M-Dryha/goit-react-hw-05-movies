@@ -8,7 +8,6 @@ const Movies = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  const [searchQuery, setSearchQuery] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
 
@@ -31,25 +30,17 @@ const Movies = () => {
     fetchFilms();
   }, [query, setSearchParams]);
 
-  const onChange = e => {
-    setSearchQuery(e.currentTarget.value.toLowerCase().trim());
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
-    setSearchParams({ query: searchQuery });
+    setSearchParams({
+      query: e.currentTarget.elements.query.value.trim(),
+    });
   };
 
   return (
     <section>
       <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          autoComplete="off"
-          autoFocus
-          name="query"
-          onChange={onChange}
-        />
+        <input type="text" autoComplete="off" autoFocus name="query" />
         <button type="submit">Search</button>
       </form>
 
