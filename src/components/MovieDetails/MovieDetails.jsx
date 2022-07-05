@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { getMovieById } from 'API';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
@@ -88,9 +88,9 @@ const MovieDetails = () => {
           </Link>
         </div>
       </section>
-      <Suspense fallback="">
-        <Outlet />
-      </Suspense>
+      {/* <Suspense fallback={<Cast />}> */}
+      <Outlet />
+      {/* </Suspense> */}
     </main>
   );
 };
