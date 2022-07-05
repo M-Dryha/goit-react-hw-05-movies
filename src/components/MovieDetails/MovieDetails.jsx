@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { getMovieById } from 'API';
+import Cast from '../Cast';
+import Reviews from '../Reviews';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
 import placeHolder from '../../data/no-image.jpg';
@@ -88,9 +90,9 @@ const MovieDetails = () => {
           </Link>
         </div>
       </section>
-      {/* <Suspense fallback={<Cast />}> */}
-      <Outlet />
-      {/* </Suspense> */}
+      <Suspense fallback={((<Cast />), (<Reviews />))}>
+        <Outlet />
+      </Suspense>
     </main>
   );
 };
