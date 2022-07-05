@@ -24,7 +24,7 @@ export const Home = () => {
   }, []);
 
   return (
-    <ul>
+    <section>
       {loading && (
         <ThreeCircles
           color="red"
@@ -33,12 +33,14 @@ export const Home = () => {
           innerCircleColor="grey"
         />
       )}
-      {data &&
-        data.results.map(({ original_title, name, id }) => (
-          <li key={id} className={s.ListItem}>
-            <Link to={`./movies/${id}`}>{original_title ?? name}</Link>
-          </li>
-        ))}
-    </ul>
+      <ul>
+        {data &&
+          data.results.map(({ original_title, name, id }) => (
+            <li key={id} className={s.ListItem}>
+              <Link to={`./movies/${id}`}>{original_title ?? name}</Link>
+            </li>
+          ))}
+      </ul>
+    </section>
   );
 };

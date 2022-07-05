@@ -24,7 +24,7 @@ const Reviews = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <section>
       {loading && (
         <ThreeCircles
           color="red"
@@ -33,7 +33,6 @@ const Reviews = () => {
           innerCircleColor="grey"
         />
       )}
-      {/* {reviews.results.length === 0 && <p> No Reviews found =(</p>} */}
       {reviews.length > 0 ? (
         reviews.map(({ author, content }) => (
           <div key={author}>
@@ -44,7 +43,7 @@ const Reviews = () => {
       ) : (
         <p> No Reviews found =(</p>
       )}
-    </div>
+    </section>
   );
 };
 

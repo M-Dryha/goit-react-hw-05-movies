@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { getMovieById } from 'API';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
-// import { nanoid } from 'nanoid';
 import placeHolder from '../../data/no-image.jpg';
 import s from './MovieDetails.module.css';
 
@@ -81,15 +80,17 @@ const MovieDetails = () => {
         <div className={s.information}>
           <h3>Additional information</h3>
 
-          <Link to={`cast`} movieId={movieId} state={{ from: backLink }}>
+          <Link to={`cast`} movieid={movieId} state={{ from: backLink }}>
             Cast
           </Link>
-          <Link to={`reviews`} movieId={movieId} state={{ from: backLink }}>
+          <Link to={`reviews`} movieid={movieId} state={{ from: backLink }}>
             Reviews
           </Link>
         </div>
       </section>
-      <Outlet />
+      <Suspense fallback="">
+        <Outlet />
+      </Suspense>
     </main>
   );
 };

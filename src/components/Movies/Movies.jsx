@@ -7,9 +7,11 @@ import s from './Movies.module.css';
 const Movies = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
+  const [searchQuery, setSearchQuery] = useState(query ?? '');
 
   useEffect(() => {
     if (!query) {
@@ -30,29 +32,39 @@ const Movies = () => {
     fetchFilms();
   }, [query, setSearchParams]);
 
+  const onChangeInput = e => {
+    setSearchQuery(e.currentTarget.value);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     setSearchParams({
-      query: e.currentTarget.elements.query.value.trim(),
+      query: searchQuery.toLowerCase().trim(),
     });
   };
 
   return (
     <section>
       <form action="" onSubmit={handleSubmit}>
-        <input type="text" autoComplete="off" autoFocus name="query" />
+        <input
+          onChange={onChangeInput}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          name="query"
+          value={searchQuery}
+        />
         <button type="submit">Search</button>
       </form>
-
+      {loading && (
+        <ThreeCircles
+          color="red"
+          outerCircleColor="blue"
+          middleCircleColor="red"
+          innerCircleColor="grey"
+        />
+      )}
       <ul>
-        {loading && (
-          <ThreeCircles
-            color="red"
-            outerCircleColor="blue"
-            middleCircleColor="red"
-            innerCircleColor="grey"
-          />
-        )}
         {data.length > 0 &&
           data.map(({ original_title, name, id }) => (
             <li key={id} className={s.ListItem}>
